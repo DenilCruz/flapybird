@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <!--identificacion del proyecto (como "nombre" unico en el mundo de maven)-->
+  <groupId>com.graphics</groupId>
+  <artifactId>opengl-java-class</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>opengl-java-class</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+
+    <!--version de java para compilar-->
+    <maven.compiler.source>17</maven.compiler.source>
+    <!--version del bytecode (.class)-->
+    <maven.compiler.target>17</maven.compiler.target>
+    <!--clase que contiene el public static void main-->
+    <mainClass>com.graphics.App</mainClass>
+    <!--version de lwjgl-->
+    <lwjgl.version>3.3.3</lwjgl.version>
+
+  </properties>
+
+  <dependencies>
+    <!--JUnit: biblioteca para escribir pruebas unitarias-->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- LWJGL = Lightweight Java Game Library 
+      permite llamar a opengl y glfw desde java
+      Tres modulos principales:
+      - lwjgl: el nucleo que carga las bibliotecas nativas
+      - lwjgl-glfw -> crear ventanas, teclado, raton (GLFW desde Java)
+      - lwjgl-opengl -> llamadas a OpenGL (dibujar shaders, buffers, etc)
+      -     
+    -->
+
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl</artifactId>
+      <version>${lwjgl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-glfw</artifactId>
+      <version>${lwjgl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-opengl</artifactId>
+      <version>${lwjgl.version}</version>
+    </dependency>
+
+    <!-- 
+      OpenGl y GLFW estan escritos en C y dependen del sistema operativo y la arquitectura del computador
+      las dependencias anteriores solo traen el codigo java;estas traen el .dylib (en windons) que realmente
+      es la que habla con el GPU del sistema.
+    -->
+
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl</artifactId>
+      <version>${lwjgl.version}</version>
+      <classifier>natives-windows</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-glfw</artifactId>
+      <version>${lwjgl.version}</version>
+      <classifier>natives-windows</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.lwjgl</groupId>
+      <artifactId>lwjgl-opengl</artifactId>
+      <version>${lwjgl.version}</version>
+      <classifier>natives-windows</classifier>
+    </dependency>
+
+  </dependencies>
+
+  <!--
+  ===================================
+  BUILD = como compilar y que plugins usar
+  ===================================
+  -->
+
+  <build>
+    <plugins>
+      <!--maven-compiler-plugin: compilar el codigo de java-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <!--exec-maven-plugin: permite ejecutar aplicacion mvn exec:exec-->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <executable>java</executable>
+          <arguments>
+            <!--GLFW exige que el hilo principal sea el primero en ejecutar (Solo en MacOS, se omite en Windows)-->
+            <argument>-classpath</argument>
+            <classpath/>
+
+            <!--la clase que contiene el main-->
+            <argument>${mainClass}</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+
+
+    </plugins>
+
+  </build>
+</project>
