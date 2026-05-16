@@ -1,8 +1,5 @@
 # Flappy Bird – Primer Parcial OpenGL
 
-## Integrantes
-- *(Completar con nombre/s del estudiante)*
-
 ## Descripción
 Juego estilo Flappy Bird construido con **LWJGL + OpenGL 3.3 Core Profile**.  
 Soporta **dos jugadores simultáneos**, pájaro compuesto por figuras geométricas,  
