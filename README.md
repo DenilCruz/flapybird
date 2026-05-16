@@ -1,4 +1,4 @@
-# Flappy Bird – Primer Parcial OpenGL
+# Flappy Bird
 
 ## Descripción
 Juego estilo Flappy Bird construido con **LWJGL + OpenGL 3.3 Core Profile**.  
