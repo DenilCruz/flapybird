@@ -13,6 +13,8 @@ public class Pipe {
     public boolean scoredP1;
     /** Indica si el Jugador 2 ya pasó por esta tubería. */
     public boolean scoredP2;
+    /** Indica si el Jugador 3 ya pasó por esta tubería. */
+    public boolean scoredP3;
 
     /** constructor de la clase Pipe */
     public Pipe(float x, float gapCentroY) {
@@ -20,5 +22,6 @@ public class Pipe {
         this.gapCentroY = gapCentroY;
         this.scoredP1 = false;
         this.scoredP2 = false;
+        this.scoredP3 = false;
     }
 }

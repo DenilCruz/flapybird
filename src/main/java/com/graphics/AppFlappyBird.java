@@ -132,6 +132,10 @@ public class AppFlappyBird {
                     estado.pajaro2.saltar();
                     SoundManager.play(SoundManager.Sound.SALTO);
                 }
+                if (input.salto3) {
+                    estado.pajaro3.saltar();
+                    SoundManager.play(SoundManager.Sound.SALTO);
+                }
                 actualizarTitulo();
             }
             case GAME_OVER -> {
@@ -221,15 +225,15 @@ public class AppFlappyBird {
             float hSup = 1.0f - gapTop;
             if (hSup > 0f) {
                 float yCentSup = gapTop + hSup * 0.5f;
-                renderer.drawRect(p.x, yCentSup, borde, hSup, 0.08f, 0.42f, 0.10f);
-                renderer.drawRect(p.x, yCentSup, GameState.TUBERIA_ANCHO, hSup, 0.18f, 0.68f, 0.22f);
+                renderer.drawRect(p.x, yCentSup, borde, hSup, 0f, 0f, 0f);
+                renderer.drawRect(p.x, yCentSup, GameState.TUBERIA_ANCHO, hSup, 0.58f, 0.48f, 0.82f);
                 // Capuchón superior (rectángulo más ancho en la boca de la tubería)
                 renderer.drawRect(p.x, gapTop + 0.035f,
                         GameState.TUBERIA_ANCHO + 0.035f, 0.06f,
-                        0.08f, 0.45f, 0.12f);
+                        0f, 0f, 0);
                 renderer.drawRect(p.x, gapTop + 0.035f,
                         GameState.TUBERIA_ANCHO + 0.022f, 0.05f,
-                        0.22f, 0.72f, 0.26f);
+                        0.58f, 0.48f, 0.82f);
             }
 
             // Parte inferior
@@ -262,18 +266,25 @@ public class AppFlappyBird {
         if (gameOver || !estado.pajaro1.vivo || estado.pajaro1.visible) {
             birdRenderer.dibujar(estado.pajaro1);
         }
+        if (gameOver || !estado.pajaro3.vivo || estado.pajaro3.visible) {
+            birdRenderer.dibujar(estado.pajaro3);
+        }
     }
 
     // ── Título de ventana ─────────────────────────────────────────────────
 
     private void actualizarTitulo() {
-        String base = String.format("Flappy Bird 2P | P1:%d  P2:%d | Nivel %d | Vel:%.2f",
+        String base = String.format("Flappy Bird 2P | P1:%d  P2:%d | P3:%d | Nivel %d | Vel:%.2f" ,
                 estado.pajaro1.puntaje, estado.pajaro2.puntaje,
-                estado.nivel, estado.velocidadActual);
+                estado.pajaro3.puntaje, estado.nivel, estado.velocidadActual);
+    
+
         String sufijo = estado.estado == GameState.Estado.GAME_OVER
                 ? " | GAME OVER – SPACE/R para reiniciar"
                 : "";
+                
         GLFW.glfwSetWindowTitle(window, base + sufijo);
+
     }
 
     // ── Limpieza ──────────────────────────────────────────────────────────
